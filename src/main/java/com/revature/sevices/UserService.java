@@ -10,6 +10,8 @@ public interface UserService {
 	
 	public User getUserById(int id);
 	
+	public User getUserByUsername(String username);
+	
 	public boolean submitTicket(User user);
 	
 	public boolean processTicket(User user);

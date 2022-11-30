@@ -32,11 +32,37 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(int userId) {
 
+			logger.info("UserServiceImpl::getUserById() called. Getting user info...");
+		
+			User target = userDAO.getById(userId);
+			
+			if(userId == target.getUserId()) {
+				logger.info("Recieved user info: " + target.toString());
+				return target;
+			}else {
+		logger.info("Incorrect User Id");
 		return null;
+			}
 	}
 
+	@Override
+	public User getUserByUsername(String username) {
+		
+		logger.info("UserServiceImpl::getUserByUsername() called. Getting user info...");
+		
+		User target = userDAO.getByUsername(username);
+		
+		if(username == target.getUsername()) {
+			logger.info("Recieved user info");
+			return target;
+		}else {
+	logger.info("Incorrect Username");
+		return null;
+	}
+}
+	
 	@Override
 	public boolean submitTicket(User user) {
 
@@ -48,5 +74,6 @@ public class UserServiceImpl implements UserService {
 		
 		return false;
 	}
+
 
 }

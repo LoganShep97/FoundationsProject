@@ -45,4 +45,37 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 	};
 	
+	public static Handler getUserById = ctx -> {
+		
+		logger.info("User is making a request for information via id...");
+		
+		String body = ctx.body();
+		
+		ObjectMapper om = new ObjectMapper();
+		om.registerModule(new JavaTimeModule());
+		
+		User target = om.readValue(body, User.class);
+		
+		ctx.html("User info: \n" + target.toString());
+		ctx.status(HttpStatus.CREATED);
+		
+	};
+	
+	public static Handler getUserByUsername = ctx -> {
+		
+		logger.info("User is making a request for information via username...");
+		
+		String body = ctx.body();
+		
+		ObjectMapper om = new ObjectMapper();
+		om.registerModule(new JavaTimeModule());
+		
+		User target = om.readValue(body, User.class);
+		
+		User test = uServ.getUserByUsername(target);
+		
+		ctx.html("User info: \n" + target.toString());
+		ctx.status(HttpStatus.CREATED);
+		
+	};
 }
