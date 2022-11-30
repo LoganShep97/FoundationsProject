@@ -15,29 +15,28 @@ import com.revature.util.JDBCConnectionUtil;
 
 public class UserDAOImpl implements UserDAO {
 	
-	Connection conn;
+	private static Connection conn;
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 	
 	public UserDAOImpl() {
-		Connection conn = JDBCConnectionUtil.getConnection();
+		 		conn = JDBCConnectionUtil.getConnection();
 	}
 	
 	@Override
 	public int create(User user) {
 		try {
 			
-				String sql = "INSERT INTO users (u_id, u_username, u_password, u_firstname, u_lastname, u_email, u_role) VALUES(?, ?, ?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO users (u_username, u_password, u_firstname, u_lastname, u_email, u_role_id) VALUES(?, ?, ?, ?, ?, ?)";
 				
 				PreparedStatement pstnt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				
-				pstnt.setInt(1, user.getUserId());
-				pstnt.setString(2, user.getUsername());
-				pstnt.setString(3, user.getPassword());
-				pstnt.setString(4, user.getFirstName());
-				pstnt.setString(5, user.getLastName());
-				pstnt.setString(6, user.geteMail());
-				pstnt.setInt(7, user.getRole());
+				pstnt.setString(1, user.getUsername());
+				pstnt.setString(2, user.getPassword());
+				pstnt.setString(3, user.getFirstName());
+				pstnt.setString(4, user.getLastName());
+				pstnt.setString(5, user.geteMail());
+				pstnt.setInt(6, user.getRole());
 				
 				
 				pstnt.executeUpdate();

@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService {
 	
 	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
-	private static UserDAO userDAO;
+	private static UserDAO userDAO = new UserDAOImpl();
 	
 	@Override
 	public boolean registerUser(User user) {
