@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		User test = uServ.getUserByUsername(target.getUsername());
 		
-		ctx.html("User info: \n" + uServ.toString());
+		ctx.html("User info \n" + test.toString());
 		ctx.status(HttpStatus.CREATED);
 		
 	};
@@ -89,7 +89,7 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		ObjectMapper om = new ObjectMapper();
 		om.registerModule(new JavaTimeModule());
 		
-		User target = om.readValue(body,  User.class);
+		User target = om.readValue(body, User.class);
 		
 		boolean isCreated = uServ.login(target.getUsername(), target.getPassword());
 		
@@ -102,5 +102,27 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		}
 		
 		
+	};
+	
+	public static Handler logout = ctx -> {
+		
+		logger.info("Attempting to log out user...");
+		
+		String body = ctx.body();
+		
+		ObjectMapper om = new ObjectMapper();
+		om.registerModule(new JavaTimeModule());
+		
+		User target = om.readValue(body, User.class);
+		
+		boolean isCreated = uServ.logout(target.getUsername(), target.getPassword());
+		
+		if(isCreated == true) {
+			ctx.html(target.getUsername() + " logged out.");
+			ctx.status(HttpStatus.CREATED);
+		}else {
+			ctx.html("Error logging out " + target.getUsername() + ", Try again.");
+			ctx.status(HttpStatus.NO_CONTENT);
+		}
 	};
 }

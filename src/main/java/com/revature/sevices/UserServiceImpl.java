@@ -28,15 +28,33 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean login(String username, String password) {
 		
-		logger.info("UserServiceImpl::register() called. Logging in user...");
+		logger.info("UserServiceImpl::login() called. Logging in user...");
 		
 		User target = userDAO.login(username, password);
+	
+		logger.info("Received from DAO. Login attempt");
 		
-		if (username == target.getUsername() && password == target.getPassword()) {
+		if (username.equalsIgnoreCase(target.getUsername()) && password.equals(target.getPassword())) {
 			logger.info("User " + username + " has logged in.");
 			return true;
 		} else {
+			logger.info("login attempt failed");
 		return false;
+		}
+	}
+	
+	public boolean logout(String username, String password) {
+		
+		User logged = userDAO.login(username, password);
+		
+		logger.info("UserServiceImpl::logout() called. Logging out " + logged.getUsername());
+		
+		if (username.equals(logged.getUsername()) && password.equals(logged.getPassword())) {
+			logger.info("User " + logged.getUsername() + " has logged out.");
+			return true;
+		} else {
+			logger.info("Failed to log out " + logged.getUsername());
+			return false;
 		}
 	}
 
@@ -46,15 +64,24 @@ public class UserServiceImpl implements UserService {
 			logger.info("UserServiceImpl::getUserById() called. Getting user info...");
 		
 			User target = userDAO.getById(userId);
+			User logged = userDAO.login(target.getUsername(), target.getPassword());
 			
+		// Going to see if this will tell if a user is logged on or not
+		if(target.getUserId() == logged.getUserId()) {
+			logger.info("The user requesting is logged in.");
 			if(userId == target.getUserId()) {
 				logger.info("Recieved user info: " + target.toString());
 				return target;
 			}else {
 		logger.info("Incorrect User Id");
 		return null;
-			}
+				}
+		}else {
+			logger.info("Incorrect User");
+			return null;
 	}
+}
+
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -63,7 +90,7 @@ public class UserServiceImpl implements UserService {
 		
 		User target = userDAO.getByUsername(username);
 		
-		if(username == target.getUsername()) {
+		if(username.equals(target.getUsername())) {
 			logger.info("Recieved user info");
 			return target;
 		}else {

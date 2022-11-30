@@ -27,9 +27,10 @@ public class MainDriver {
 		});
 		
 		app.post("/register/user", UserController.register);
-		app.get("/byId/user", UserController.getUserById);
-		app.get("/byUsername/user", UserController.getUserByUsername);
-		app.post("/login/user", UserController.login);
+		app.get("/login/byId", UserController.getUserById);
+		app.get("/login/byUser", UserController.getUserByUsername);
+		app.post("/login", UserController.login);
+		app.delete("/login/logout", UserController.logout);
 		
 }
 }

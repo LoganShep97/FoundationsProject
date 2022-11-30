@@ -9,8 +9,8 @@ public class Reimbursements {
 	private String dateSubmitted;
 	private String dateResolved;
 	private String description;
-	private int receipt;
-	private int author;
+	private String author;
+	private String resolver;
 	private int status;
 	
 	public Reimbursements() {
@@ -18,15 +18,27 @@ public class Reimbursements {
 	}
 
 	public Reimbursements(int reimbId, int amount, String dateSubmitted, String dateResolved, String description,
-			int receipt, int author, int status) {
+			String author, String resolver, int status) {
 		super();
 		this.reimbId = reimbId;
 		this.amount = amount;
 		this.dateSubmitted = dateSubmitted;
 		this.dateResolved = dateResolved;
 		this.description = description;
-		this.receipt = receipt;
 		this.author = author;
+		this.resolver = resolver;
+		this.status = status;
+	}
+
+	public Reimbursements(int amount, String dateSubmitted, String dateResolved, String description, String author,
+			String resolver, int status) {
+		super();
+		this.amount = amount;
+		this.dateSubmitted = dateSubmitted;
+		this.dateResolved = dateResolved;
+		this.description = description;
+		this.author = author;
+		this.resolver = resolver;
 		this.status = status;
 	}
 
@@ -70,20 +82,20 @@ public class Reimbursements {
 		this.description = description;
 	}
 
-	public int getReceipt() {
-		return receipt;
-	}
-
-	public void setReceipt(int receipt) {
-		this.receipt = receipt;
-	}
-
-	public int getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(int author) {
+	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getResolver() {
+		return resolver;
+	}
+
+	public void setResolver(String resolver) {
+		this.resolver = resolver;
 	}
 
 	public int getStatus() {
@@ -96,7 +108,7 @@ public class Reimbursements {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(amount, author, dateResolved, dateSubmitted, description, receipt, reimbId, status);
+		return Objects.hash(amount, author, dateResolved, dateSubmitted, description, reimbId, resolver, status);
 	}
 
 	@Override
@@ -108,17 +120,20 @@ public class Reimbursements {
 		if (getClass() != obj.getClass())
 			return false;
 		Reimbursements other = (Reimbursements) obj;
-		return amount == other.amount && author == other.author && Objects.equals(dateResolved, other.dateResolved)
+		return amount == other.amount && Objects.equals(author, other.author)
+				&& Objects.equals(dateResolved, other.dateResolved)
 				&& Objects.equals(dateSubmitted, other.dateSubmitted) && Objects.equals(description, other.description)
-				&& receipt == other.receipt && reimbId == other.reimbId && status == other.status;
+				&& reimbId == other.reimbId && Objects.equals(resolver, other.resolver) && status == other.status;
 	}
 
 	@Override
 	public String toString() {
 		return "Reimbursements [reimbId=" + reimbId + ", amount=" + amount + ", dateSubmitted=" + dateSubmitted
-				+ ", dateResolved=" + dateResolved + ", description=" + description + ", receipt=" + receipt
-				+ ", author=" + author + ", status=" + status + "]";
+				+ ", dateResolved=" + dateResolved + ", description=" + description + ", author=" + author
+				+ ", resolver=" + resolver + ", status=" + status + "]";
 	}
+
+	
 	
 	
 	

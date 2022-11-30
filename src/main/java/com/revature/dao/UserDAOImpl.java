@@ -79,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
 				target.setFirstName(rs.getString("u_firstname"));
 				target.setLastName(rs.getString("u_lastname"));
 				target.seteMail(rs.getString("u_email"));
-				target.setRole(rs.getInt("u_role"));
+				target.setRole(rs.getInt("u_role_id"));
 			}
 			return target;
 		}catch(SQLException e) {
@@ -110,7 +110,7 @@ public class UserDAOImpl implements UserDAO {
 				target.setFirstName(rs.getString("u_firstname"));
 				target.setLastName(rs.getString("u_lastname"));
 				target.seteMail(rs.getString("u_email"));
-				target.setRole(rs.getInt("u_role"));
+				target.setRole(rs.getInt("u_role_id"));
 			}
 			return target;
 		}catch(SQLException e) {
@@ -139,7 +139,7 @@ public class UserDAOImpl implements UserDAO {
 			target.setFirstName(rs.getString("u_firstname"));
 			target.setLastName(rs.getString("u_lastname"));
 			target.seteMail(rs.getString("u_email"));
-			target.setRole(rs.getInt("u_role"));
+			target.setRole(rs.getInt("u_role_id"));
 		}
 		return target;
 		}catch (SQLException e) {
@@ -150,10 +150,27 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public int submitTicket(Reimbursements reimb) {
-		
+		try {
+			
 		String sql = "INSERT INTO reimbursements (r_amount, r_description) VALUES (?, ?)";
 		
+		PreparedStatement pstnt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		
+		pstnt.setInt(1, reimb.getAmount());
+		pstnt.setString(2, reimb.getDescription());
+		
+		pstnt.executeUpdate();
+		
+		ResultSet rs = pstnt.getGeneratedKeys();
+		
+		rs.next();
+		
+		logger.info("UserDAOImpl - submitTicket(), - new ticket id is " + rs.getInt(1));
+		return rs.getInt("r_id");
+		
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		return 0;
 	}
 
