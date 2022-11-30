@@ -119,6 +119,35 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+	public User login(String username, String password) {
+		try {
+		
+		String sql = "SELECT * FROM users WHERE u_username = ? AND u_password = ?";
+		
+		PreparedStatement pstnt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		
+		pstnt.setString(1, username);
+		pstnt.setString(2, password);
+		
+		ResultSet rs = pstnt.executeQuery();
+		
+		User target = new User();
+		while(rs.next()) {
+			target.setUserId(rs.getInt("u_id"));
+			target.setUsername(rs.getString("u_username"));
+			target.setPassword(rs.getString("u_password"));
+			target.setFirstName(rs.getString("u_firstname"));
+			target.setLastName(rs.getString("u_lastname"));
+			target.seteMail(rs.getString("u_email"));
+			target.setRole(rs.getInt("u_role"));
+		}
+		return target;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
 	@Override
 	public int submitTicket(Reimbursements reimb) {
 		
@@ -129,7 +158,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int processTicket(String username, int reimbId) {
+	public int processTicket(User user, int reimbId) {
 		
 		return 0;
 	}

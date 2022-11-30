@@ -11,8 +11,10 @@ public interface UserDAO {
 	
 	public User getByUsername(String username);
 	
+	public User login(String username, String password);
+	
 	public int submitTicket(Reimbursements reimb);
 	
-	public int processTicket(String username, int reimbId);
+	public int processTicket(User user, int reimbId);
 	
 }

@@ -72,10 +72,35 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		User target = om.readValue(body, User.class);
 		
-		User test = uServ.getUserByUsername(target);
+		User test = uServ.getUserByUsername(target.getUsername());
 		
-		ctx.html("User info: \n" + target.toString());
+		ctx.html("User info: \n" + uServ.toString());
 		ctx.status(HttpStatus.CREATED);
+		
+	};
+	
+	
+	public static Handler login = ctx -> {
+		
+		logger.info("Attempting to log in user...");
+		
+		String body = ctx.body();
+		
+		ObjectMapper om = new ObjectMapper();
+		om.registerModule(new JavaTimeModule());
+		
+		User target = om.readValue(body,  User.class);
+		
+		boolean isCreated = uServ.login(target.getUsername(), target.getPassword());
+		
+		if(isCreated == true) {
+			ctx.html(target.getUsername() + " logged in.");
+			ctx.status(HttpStatus.CREATED);
+		}else {
+			ctx.html("Error during log in. Try again.");
+			ctx.status(HttpStatus.NO_CONTENT);
+		}
+		
 		
 	};
 }

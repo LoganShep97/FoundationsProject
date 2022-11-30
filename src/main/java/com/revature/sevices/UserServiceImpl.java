@@ -27,8 +27,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean login(String username, String password) {
-
+		
+		logger.info("UserServiceImpl::register() called. Logging in user...");
+		
+		User target = userDAO.login(username, password);
+		
+		if (username == target.getUsername() && password == target.getPassword()) {
+			logger.info("User " + username + " has logged in.");
+			return true;
+		} else {
 		return false;
+		}
 	}
 
 	@Override
