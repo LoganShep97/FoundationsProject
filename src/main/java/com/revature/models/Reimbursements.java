@@ -6,40 +6,29 @@ public class Reimbursements {
 
 	private int reimbId;
 	private int amount;
-	private String dateSubmitted;
-	private String dateResolved;
 	private String description;
-	private String author;
-	private String resolver;
 	private int status;
+	private String author;
 	
 	public Reimbursements() {
 		super();
 	}
 
-	public Reimbursements(int reimbId, int amount, String dateSubmitted, String dateResolved, String description,
-			String author, String resolver, int status) {
+	public Reimbursements(int reimbId, int amount, String description, int status, String author) {
 		super();
 		this.reimbId = reimbId;
 		this.amount = amount;
-		this.dateSubmitted = dateSubmitted;
-		this.dateResolved = dateResolved;
 		this.description = description;
-		this.author = author;
-		this.resolver = resolver;
 		this.status = status;
+		this.author = author;
 	}
 
-	public Reimbursements(int amount, String dateSubmitted, String dateResolved, String description, String author,
-			String resolver, int status) {
+	public Reimbursements(int amount, String description, int status, String author) {
 		super();
 		this.amount = amount;
-		this.dateSubmitted = dateSubmitted;
-		this.dateResolved = dateResolved;
 		this.description = description;
-		this.author = author;
-		this.resolver = resolver;
 		this.status = status;
+		this.author = author;
 	}
 
 	public int getReimbId() {
@@ -58,44 +47,12 @@ public class Reimbursements {
 		this.amount = amount;
 	}
 
-	public String getDateSubmitted() {
-		return dateSubmitted;
-	}
-
-	public void setDateSubmitted(String dateSubmitted) {
-		this.dateSubmitted = dateSubmitted;
-	}
-
-	public String getDateResolved() {
-		return dateResolved;
-	}
-
-	public void setDateResolved(String dateResolved) {
-		this.dateResolved = dateResolved;
-	}
-
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getResolver() {
-		return resolver;
-	}
-
-	public void setResolver(String resolver) {
-		this.resolver = resolver;
 	}
 
 	public int getStatus() {
@@ -106,9 +63,17 @@ public class Reimbursements {
 		this.status = status;
 	}
 
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(amount, author, dateResolved, dateSubmitted, description, reimbId, resolver, status);
+		return Objects.hash(amount, author, description, reimbId, status);
 	}
 
 	@Override
@@ -121,16 +86,13 @@ public class Reimbursements {
 			return false;
 		Reimbursements other = (Reimbursements) obj;
 		return amount == other.amount && Objects.equals(author, other.author)
-				&& Objects.equals(dateResolved, other.dateResolved)
-				&& Objects.equals(dateSubmitted, other.dateSubmitted) && Objects.equals(description, other.description)
-				&& reimbId == other.reimbId && Objects.equals(resolver, other.resolver) && status == other.status;
+				&& Objects.equals(description, other.description) && reimbId == other.reimbId && status == other.status;
 	}
 
 	@Override
 	public String toString() {
-		return "Reimbursements [reimbId=" + reimbId + ", amount=" + amount + ", dateSubmitted=" + dateSubmitted
-				+ ", dateResolved=" + dateResolved + ", description=" + description + ", author=" + author
-				+ ", resolver=" + resolver + ", status=" + status + "]";
+		return "Reimbursements [reimbId=" + reimbId + ", amount=" + amount + ", description=" + description
+				+ ", status=" + status + ", author=" + author + "]";
 	}
 
 	

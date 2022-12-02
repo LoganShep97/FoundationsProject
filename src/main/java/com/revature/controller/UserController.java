@@ -74,6 +74,8 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		User test = uServ.getUserByUsername(target.getUsername());
 		
+		ctx.cookie("Current User");
+		
 		ctx.html("User info \n" + test.toString());
 		ctx.status(HttpStatus.CREATED);
 		
@@ -94,14 +96,24 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		boolean isCreated = uServ.login(target.getUsername(), target.getPassword());
 		
 		if(isCreated == true) {
-			ctx.html(target.getUsername() + " logged in.");
+			ctx.cookie("Current User");
+			ctx.html("logged in");
 			ctx.status(HttpStatus.CREATED);
+			
 		}else {
 			ctx.html("Error during log in. Try again.");
 			ctx.status(HttpStatus.NO_CONTENT);
 		}
+			
+	};
+	
+	public static Handler isLogin = ctx -> {
 		
-		
+		String cookie = ctx.cookie("Current User");
+		ctx.cookie("Current User");
+		if (cookie == "null") {
+			ctx.redirect("/");
+		}
 	};
 	
 	public static Handler logout = ctx -> {
@@ -118,11 +130,13 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 		boolean isCreated = uServ.logout(target.getUsername(), target.getPassword());
 		
 		if(isCreated == true) {
-			ctx.html(target.getUsername() + " logged out.");
+			ctx.cookieStore().set("Current User", null);
 			ctx.status(HttpStatus.CREATED);
 		}else {
 			ctx.html("Error logging out " + target.getUsername() + ", Try again.");
 			ctx.status(HttpStatus.NO_CONTENT);
 		}
 	};
+	
+	
 }

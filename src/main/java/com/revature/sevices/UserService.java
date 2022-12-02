@@ -10,11 +10,6 @@ public interface UserService {
 	
 	public boolean logout(String username, String password);
 	
-	public User getUserById(int id);
-	
 	public User getUserByUsername(String username);
 	
-	public boolean submitTicket(User user);
-	
-	public boolean processTicket(User user);
 }

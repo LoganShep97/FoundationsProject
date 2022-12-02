@@ -7,7 +7,8 @@ import com.revature.models.User;
 import com.revature.dao.*;
 
 public class UserServiceImpl implements UserService {
-
+	
+	static User sessionEmployee = null;
 	
 	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
@@ -59,31 +60,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(int userId) {
-
-			logger.info("UserServiceImpl::getUserById() called. Getting user info...");
-		
-			User target = userDAO.getById(userId);
-			User logged = userDAO.login(target.getUsername(), target.getPassword());
-			
-		// Going to see if this will tell if a user is logged on or not
-		if(target.getUserId() == logged.getUserId()) {
-			logger.info("The user requesting is logged in.");
-			if(userId == target.getUserId()) {
-				logger.info("Recieved user info: " + target.toString());
-				return target;
-			}else {
-		logger.info("Incorrect User Id");
-		return null;
-				}
-		}else {
-			logger.info("Incorrect User");
-			return null;
-	}
-}
-
-
-	@Override
 	public User getUserByUsername(String username) {
 		
 		logger.info("UserServiceImpl::getUserByUsername() called. Getting user info...");
@@ -98,18 +74,5 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 }
-	
-	@Override
-	public boolean submitTicket(User user) {
-
-		return false;
-	}
-
-	@Override
-	public boolean processTicket(User user) {
-		
-		return false;
-	}
-
 
 }

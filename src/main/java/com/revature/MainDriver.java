@@ -3,7 +3,9 @@ package com.revature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.controller.ReimbController;
 import com.revature.controller.UserController;
+import com.revature.models.User;
 import com.revature.sevices.UserServiceImpl;
 
 import io.javalin.Javalin;
@@ -26,11 +28,16 @@ public class MainDriver {
 			logger.info("Request at URL " + ctx.url() + "is complete.");
 		});
 		
-		app.post("/register/user", UserController.register);
-		app.get("/login/byId", UserController.getUserById);
-		app.get("/login/byUser", UserController.getUserByUsername);
+		//app.before("/user/*"
+		
+		app.before("/user/*", UserController.isLogin);
+		
+		app.post("/register", UserController.register);
+		app.get("/user/byId", UserController.getUserById);
+		app.get("/user/byUser", UserController.getUserByUsername);
 		app.post("/login", UserController.login);
-		app.delete("/login/logout", UserController.logout);
+		app.delete("/logout", UserController.logout);
+		app.post("/user/submit", ReimbController.submitTicket);
 		
 }
 }
