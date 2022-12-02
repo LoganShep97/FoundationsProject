@@ -28,10 +28,6 @@ public class MainDriver {
 			logger.info("Request at URL " + ctx.url() + "is complete.");
 		});
 		
-		//app.before("/user/*"
-		
-		app.before("/user/*", UserController.isLogin);
-		
 		app.post("/register", UserController.register);
 		app.get("/user/byId", UserController.getUserById);
 		app.get("/user/byUser", UserController.getUserByUsername);

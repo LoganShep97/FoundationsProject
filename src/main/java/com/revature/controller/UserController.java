@@ -107,15 +107,6 @@ private static Logger logger = LoggerFactory.getLogger(UserController.class);
 			
 	};
 	
-	public static Handler isLogin = ctx -> {
-		
-		String cookie = ctx.cookie("Current User");
-		ctx.cookie("Current User");
-		if (cookie == "null") {
-			ctx.redirect("/");
-		}
-	};
-	
 	public static Handler logout = ctx -> {
 		
 		logger.info("Attempting to log out user...");
